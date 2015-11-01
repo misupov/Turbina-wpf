@@ -1,0 +1,69 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Turbina.Editors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Style TargetType="local:Pin">
+        <Setter Property="IsTabStop" Value="False" />
+<!--        <Setter Property="Margin" Value="0,2"/>-->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Pin">
+                    <Grid>
+<!--                        <Grid x:Name="PART_Pin">-->
+<!--                            <Ellipse Width="8" Height="8" Fill="Crimson" StrokeThickness="1" Stroke="White"/>-->
+<!--                            <Ellipse Width="12" Height="12" Fill="Transparent"/>-->
+<!--                        </Grid>-->
+                        <StackPanel Orientation="Horizontal" FlowDirection="{TemplateBinding FlowDirection}">
+                            <ContentPresenter VerticalAlignment="Center" Content="{TemplateBinding ValuePresenter}"/>
+<!--                            <TextBlock Margin="3,0" VerticalAlignment="Center" Foreground="White" Text="{TemplateBinding DisplayName}"/>-->
+                            <local:EditableTextBlock Background="Transparent"
+                                                     Foreground="White"
+                                                     SelectionBrush="White"
+                                                     CaretBrush="White"
+                                                     VerticalAlignment="Center"
+                                                     Margin="4,0,0,0"
+                                                     Text="{TemplateBinding Title}"/>
+                        </StackPanel>
+                    </Grid>
+<!--                    <ControlTemplate.Triggers>-->
+<!--                        <DataTrigger Value="RightToLeft" Binding="{Binding Path=FlowDirection, RelativeSource={RelativeSource Self}}">-->
+<!--                            <Setter TargetName="PART_Pin" Property="Margin" Value="-11,0,0,0"/>-->
+<!--                        </DataTrigger>-->
+<!--                    </ControlTemplate.Triggers>-->
+
+<!--                    <Grid>-->
+<!--                        <Ellipse Width="12" Height="12" Fill="Transparent"/>-->
+<!--                        <Ellipse Width="10" Height="10" Stroke="#a000" StrokeThickness="1"/>-->
+<!--                        <Ellipse Width="8" Height="8" Fill="Crimson" StrokeThickness="1" Stroke="White"/>-->
+<!--                    </Grid>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:Bullet">
+        <Setter Property="Opacity" Value="0.95"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Bullet">
+<!--                    <ControlTemplate.Triggers>-->
+<!--                        <DataTrigger Value="RightToLeft" Binding="{Binding Path=FlowDirection, RelativeSource={RelativeSource Self}}">-->
+<!--                            <Setter Property="Margin" Value="21,0,0,0"/>-->
+<!--                        </DataTrigger>-->
+<!--                    </ControlTemplate.Triggers>-->
+
+                    <Grid>
+                        <Ellipse Width="12" Height="12" Fill="Transparent"/>
+                        <Ellipse Width="10" Height="10" Stroke="#a000" StrokeThickness="1"/>
+                        <Ellipse Width="8" Height="8" Fill="Crimson" StrokeThickness="1" Stroke="White"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

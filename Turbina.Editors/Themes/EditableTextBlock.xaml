@@ -1,0 +1,36 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Turbina.Editors"
+    xmlns:converters="clr-namespace:Turbina.Editors.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type local:EditableTextBlock}">
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:EditableTextBlock">
+                    <ControlTemplate.Resources>
+                        <converters:InvertBoolConverter x:Key="InvertBoolConverter"/>
+                    </ControlTemplate.Resources>
+                    <TextBox x:Name="PART_TextBox"
+                             Focusable="{Binding Path=IsInReadOnlyMode, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertBoolConverter}}"
+                             IsHitTestVisible="{Binding Path=IsInReadOnlyMode, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InvertBoolConverter}}"
+                             Foreground="{TemplateBinding Foreground}"
+                             SelectionBrush="{TemplateBinding SelectionBrush}"
+                             Background="{TemplateBinding Background}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             CaretBrush="{TemplateBinding CaretBrush}"
+                             IsReadOnlyCaretVisible="False"
+                             IsTabStop="False"
+                             IsInactiveSelectionHighlightEnabled="False"
+                             IsReadOnly="{Binding Path=IsInReadOnlyMode, RelativeSource={RelativeSource TemplatedParent}}"
+                             Text="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

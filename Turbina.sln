@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turbina.UI", "src\Turbina.UI\Turbina.UI.csproj", "{C36A69E3-233B-479A-8B5D-A8DACB345987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turbina.Nodes", "src\Turbina.Nodes\Turbina.Nodes.csproj", "{3A96E6DD-0B11-4012-A337-99D8F4C6A7B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turbina", "src\Turbina\Turbina.csproj", "{58CC75D4-1279-4FC3-A732-42D37F6C7CE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{636ADF56-7B84-4F0D-94F4-8E7E7CD55254}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.config = .nuget\NuGet.config
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".solution", ".solution", "{AEE53B80-F1C7-4591-BF52-BC2994346E0A}"
+	ProjectSection(SolutionItems) = preProject
+		sgKey.snk = sgKey.snk
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turbina.Editors", "Turbina.Editors\Turbina.Editors.csproj", "{42F1F360-2BF1-4107-8F19-94AF77341496}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C36A69E3-233B-479A-8B5D-A8DACB345987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C36A69E3-233B-479A-8B5D-A8DACB345987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C36A69E3-233B-479A-8B5D-A8DACB345987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C36A69E3-233B-479A-8B5D-A8DACB345987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A96E6DD-0B11-4012-A337-99D8F4C6A7B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A96E6DD-0B11-4012-A337-99D8F4C6A7B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A96E6DD-0B11-4012-A337-99D8F4C6A7B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A96E6DD-0B11-4012-A337-99D8F4C6A7B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58CC75D4-1279-4FC3-A732-42D37F6C7CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58CC75D4-1279-4FC3-A732-42D37F6C7CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58CC75D4-1279-4FC3-A732-42D37F6C7CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58CC75D4-1279-4FC3-A732-42D37F6C7CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42F1F360-2BF1-4107-8F19-94AF77341496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42F1F360-2BF1-4107-8F19-94AF77341496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42F1F360-2BF1-4107-8F19-94AF77341496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42F1F360-2BF1-4107-8F19-94AF77341496}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

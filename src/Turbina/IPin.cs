@@ -8,6 +8,8 @@ namespace Turbina
 
         Type Type { get; }
 
+        PinDirection Direction { get; }
+
         Func<object> GetValue { get; }
 
         Action<object> SetValue { get; }

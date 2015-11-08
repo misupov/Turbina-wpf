@@ -23,9 +23,8 @@ namespace Turbina.UI
             var cb = new ContainerBuilder();
             cb.RegisterModule<TurbinaModule>().RegisterModule<TurbinaNodesModule>();
             var container = cb.Build();
-            CompositeNodeEditor.autofacContainer = container;
 
-            application.Run(new MainWindow());
+            application.Run(new MainWindow(container));
         }
     }
 }

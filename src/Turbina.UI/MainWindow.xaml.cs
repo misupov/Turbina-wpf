@@ -1,11 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shell;
 using System.Windows.Threading;
+using Autofac;
 using Microsoft.Expression.Media.Effects;
+using Turbina.Editors;
+using Turbina.Editors.ViewModels;
 
 namespace Turbina.UI
 {
@@ -14,73 +20,54 @@ namespace Turbina.UI
         private readonly Brush _background;
         private DispatcherTimer _timer;
         private Stopwatch _sw;
+        private readonly CompositeNodeViewModel _compositeNodeViewModel;
 
-        public MainWindow()
+        public MainWindow(IContainer container)
         {
             InitializeComponent();
             _background = new SolidColorBrush(Color.FromRgb(0x24, 0x27, 0x28));
 
-//            _background =
-//                new ImageBrush(new BitmapImage(new Uri(@"Images/grid.jpg", UriKind.Relative)))
-//                {
-//                    Stretch = Stretch.None,
-//                    TileMode = TileMode.Tile,
-//                    AlignmentX = AlignmentX.Left,
-//                    AlignmentY = AlignmentY.Top,
-//                    Viewport = new Rect(0, 0, 128, 128),
-//                    ViewportUnits = BrushMappingMode.Absolute
-//                };
-//
+            //            _background =
+            //                new ImageBrush(new BitmapImage(new Uri(@"Images/grid.jpg", UriKind.Relative)))
+            //                {
+            //                    Stretch = Stretch.None,
+            //                    TileMode = TileMode.Tile,
+            //                    AlignmentX = AlignmentX.Left,
+            //                    AlignmentY = AlignmentY.Top,
+            //                    Viewport = new Rect(0, 0, 128, 128),
+            //                    ViewportUnits = BrushMappingMode.Absolute
+            //                };
+
             Application.Current.Resources["Dunno"] = Application.Current.Resources["Dunno1"];
 
-            var compositeNode = TestNodes.Test3(new NodeDispatcher("Graph Dispatcher"));
-            MainNode.DataContext = compositeNode;
-//            var nodeEditorAttribute = compositeNode.GetType().GetCustomAttributes<EditorForAttribute>().FirstOrDefault();
-//            nodeEditorAttribute.nodeType
+            var compositeNode = new CompositeNode(new NodeDispatcher("Graph Dispatcher"));// TestNodes.Test3(new NodeDispatcher("Graph Dispatcher"));
+            _compositeNodeViewModel = new CompositeNodeViewModel(compositeNode, new Vector(), new ControlTypesResolver());
+            MainNode.DataContext = _compositeNodeViewModel;
 
-            //            if (nodeEditorAttribute != null)
+            var contextMenu = new ContextMenu();
+            MainNode.ContextMenu = contextMenu;
+
+            var nodeTypes = container != null ? container.ResolveNamed<IEnumerable<Type>>("NodeTypes") : Enumerable.Empty<Type>();
+
+            foreach (var nodeType in nodeTypes)
             {
-//                var dnd = new DragableControl();
-//                dnd.DragDelta += (sender, args) =>
-//                {
-//                    var c = (UIElement) sender;
-//                    System.Windows.Controls.Canvas.SetLeft(c, System.Windows.Controls.Canvas.GetLeft(c) + args.HorizontalChange);
-//                    System.Windows.Controls.Canvas.SetTop(c, System.Windows.Controls.Canvas.GetTop(c) + args.VerticalChange);
-//                };
-
-//                Canvas.Items.Add(compositeNode);
-
-//                var element = Activator.CreateInstance(nodeEditorAttribute.NodeType) as NodeEditor;
-
-                //                System.Windows.Controls.Canvas.SetLeft(dnd, 0);
-                //                System.Windows.Controls.Canvas.SetTop(dnd, 0);
-                //                dnd.Content = element;
-                //                element.DragDelta += ControlOnDragDelta;
-
-                //                Canvas.Children.Add(dnd);
+                var menuItem = new MenuItem { Header = nodeType.Name };
+                menuItem.Click += (sender, args) => MenuItemOnClick(nodeType, MainNode.TranslatePosition(menuItem.TranslatePoint(new Point(), this)));
+                contextMenu.Items.Add(menuItem);
             }
 
-//            Grid.Background = _background;
+        }
 
-//            _rope = new Rope();
-//            _rope.Stroke = Brushes.Blue;
-//            _rope.StrokeThickness = 3;
-//            Canvas.Children.Add(_rope);
-//
-//            //            _control1 = new NodeEditor();
-//            //            NodeSurface.SetLeft(_control1, r.Next(0, 800));
-//            //            NodeSurface.SetTop(_control1, r.Next(0, 800));
-//            //            Canvas.Children.Add(_control1);
-//
-//            //            _control2 = new NodeEditor();
-//            //            NodeSurface.SetLeft(_control2, r.Next(0, 800));
-//            //            NodeSurface.SetTop(_control2, r.Next(0, 800));
-//            //            Canvas.Children.Add(_control2);
-//
-//            //            DependencyPropertyDescriptor.FromProperty(NodeSurface.LeftProperty, typeof(NodeEditor)).AddValueChanged(_control1, Handler);
-//            //            DependencyPropertyDescriptor.FromProperty(NodeSurface.TopProperty, typeof(NodeEditor)).AddValueChanged(_control1, Handler);
-//            //            DependencyPropertyDescriptor.FromProperty(NodeSurface.LeftProperty, typeof(NodeEditor)).AddValueChanged(_control2, Handler);
-//            //            DependencyPropertyDescriptor.FromProperty(NodeSurface.TopProperty, typeof(NodeEditor)).AddValueChanged(_control2, Handler);
+        private void MenuItemOnClick(Type type, Point translatePoint)
+        {
+            var node = (Node)Activator.CreateInstance(type);
+            var title = type.Name;
+            if (title.EndsWith("Node") && title.Length > 4)
+            {
+                title = title.Substring(0, title.Length - 4);
+            }
+            node.Title = title;
+            _compositeNodeViewModel.AddNode(node, new Vector(translatePoint.X, translatePoint.Y));
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -103,9 +90,11 @@ namespace Turbina.UI
             Grid.Background = ToggleButton.IsChecked == true ? Brushes.Transparent : _background;
             OnAirImage.Visibility = ToggleButton.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
 
+            _compositeNodeViewModel.ResetNodes();
+
             _sw = Stopwatch.StartNew();
             _timer?.Stop();
-            _timer = new DispatcherTimer(TimeSpan.FromMilliseconds(10), DispatcherPriority.Background, Callback, Dispatcher);
+            _timer = new DispatcherTimer(TimeSpan.FromMilliseconds(10), DispatcherPriority.Normal, Callback, Dispatcher);
         }
 
         private void Callback(object sender, EventArgs eventArgs)
@@ -124,16 +113,6 @@ namespace Turbina.UI
             {
                 effect.Progress = progress;
             }
-        }
-
-        private void CollapseAllButtonClick(object sender, RoutedEventArgs e)
-        {
-//            Canvas.CollapseAll();
-        }
-
-        private void ExpandAllButtonClick(object sender, RoutedEventArgs e)
-        {
-//            Canvas.ExpandAll();
         }
     }
 }

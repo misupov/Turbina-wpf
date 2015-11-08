@@ -116,9 +116,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="..\..\sgKey.snk">
-      <Link>sgKey.snk</Link>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -136,7 +133,7 @@
     <Resource Include="Images\grid.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Turbina.Editors\Turbina.Editors.csproj">
+    <ProjectReference Include="..\Turbina.Editors\Turbina.Editors.csproj">
       <Project>{42F1F360-2BF1-4107-8F19-94AF77341496}</Project>
       <Name>Turbina.Editors</Name>
     </ProjectReference>

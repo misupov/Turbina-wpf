@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Argument.cs" />
+    <Compile Include="ExecutionPath.cs" />
     <Compile Include="INodeTypesRepository.cs" />
     <Compile Include="InputAttribute.cs" />
     <Compile Include="IPin.cs" />
@@ -98,15 +99,14 @@
     <Compile Include="NodeDispatcher.cs" />
     <Compile Include="CompositeNode.cs" />
     <Compile Include="OutputAttribute.cs" />
+    <Compile Include="PinDirection.cs" />
     <Compile Include="ProcessingContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="PropertyPin.cs" />
+    <Compile Include="ReferenceEqualityComparer.cs" />
     <Compile Include="TurbinaModule.cs" />
-    <None Include="..\..\sgKey.snk">
-      <Link>sgKey.snk</Link>
-    </None>
     <None Include="packages.config" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>

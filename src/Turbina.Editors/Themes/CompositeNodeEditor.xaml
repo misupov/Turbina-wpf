@@ -1,0 +1,49 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Turbina.Editors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Turbina.Editors.ViewModels"
+    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type local:CompositeNodeEditor}">
+        <Setter Property="Focusable" Value="True"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:CompositeNodeEditor">
+                    <ControlTemplate.Resources>
+                        <local:NodeTemplateSelector x:Key="NodeTemplateSelector"/>
+                        <local:LinkTemplateSelector x:Key="LinkTemplateSelector"/>
+                    </ControlTemplate.Resources>
+                    <Grid Background="Transparent">
+                        <ItemsControl d:DataContext="{d:DesignInstance viewModels:CompositeNodeViewModel}"
+                                      ItemsSource="{Binding LinkViewModels}"
+                                      ItemTemplateSelector="{StaticResource LinkTemplateSelector}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <local:ScalableCanvas Scale="{Binding Scale}"
+                                                          TopLeftCorner="{Binding TopLeftCorner}"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                        <ItemsControl x:Name="PART_ItemsControl"
+                                      d:DataContext="{d:DesignInstance viewModels:CompositeNodeViewModel}"
+                                      ItemsSource="{Binding InnerNodeViewModels}"
+                                      ItemTemplateSelector="{StaticResource NodeTemplateSelector}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <local:ScalableCanvas Scale="{Binding Scale}"
+                                                          TopLeftCorner="{Binding TopLeftCorner}"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

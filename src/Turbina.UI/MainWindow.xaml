@@ -22,13 +22,12 @@
         </Grid.ColumnDefinitions>
         <Image x:Name="OnAirImage" Source="Images/on-air.jpg" MaxWidth="400" HorizontalAlignment="Left" VerticalAlignment="Bottom" Visibility="Collapsed"/>
         <editors:CompositeNodeEditor x:Name="MainNode"/>
+<!--        <editors:CompositeNodeEditor x:Name="MainNode"/>-->
 <!--        <ListBox x:Name="Canvas" ItemTemplateSelector="{StaticResource EditorTemplateSelector}"/>-->
 <!--        <ropes:RopeCanvas x:Name="RopeCanvas"/>-->
 <!--        <ropes:Rope x:Name="RopeCanvas" Stroke="Blue" StrokeThickness="10"/>-->
         <ScrollBar Grid.Column="1" Value="{Binding ElementName=Canvas, Path=Scale}" Minimum="0.01" Maximum="2" SmallChange="0.01" LargeChange="1"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Click="CollapseAllButtonClick">CollapseAll</Button>
-            <Button Click="ExpandAllButtonClick">ExpandAll</Button>
             <ToggleButton x:Name="ToggleButton" Click="ButtonBase_OnClick">Run!</ToggleButton>
         </StackPanel>
     </Grid>

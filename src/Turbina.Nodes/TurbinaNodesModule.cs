@@ -12,7 +12,10 @@ namespace Turbina.Nodes
             builder.Register(context => typeof(RandomNode)).As<Type>().Named<Type>("NodeTypes");
             builder.Register(context => typeof(StringConcatNode)).As<Type>().Named<Type>("NodeTypes");
             builder.Register(context => typeof(StringConstNode)).As<Type>().Named<Type>("NodeTypes");
+            builder.Register(context => typeof(AddDoublesNode)).As<Type>().Named<Type>("NodeTypes");
             builder.Register(context => typeof(TimerNode)).As<Type>().Named<Type>("NodeTypes");
+            builder.Register(context => typeof(SamplerNode)).As<Type>().Named<Type>("NodeTypes");
+            builder.Register(context => typeof(ManyInputsNode)).As<Type>().Named<Type>("NodeTypes");
         }
     }
 }

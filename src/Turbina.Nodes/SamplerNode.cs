@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Threading;
 
 namespace Turbina.Nodes
 {
-    public class TimerNode : Node
+    public class SamplerNode : Node
     {
         private IDisposable _disposable;
         private bool _isEnabled;
         private TimeSpan _interval;
-        private bool _highPrecision;
+        private bool _needUpdate;
 
         [Input]
         public bool IsEnabled { get; set; }
@@ -20,61 +19,54 @@ namespace Turbina.Nodes
         public TimeSpan Interval { get; set; }
 
         [Input]
-        public bool HighPrecision { get; set; }
+        public object Input { get; set; }
 
         [Output]
-        public int Counter { get; private set; }
+        public object Output { get; private set; }
 
-        [Output]
-        public DateTimeOffset TickTime { get; private set; }
-
-        public TimerNode()
+        public SamplerNode()
         {
             _disposable = Disposable.Empty;
         }
 
         private void TimerCallback()
         {
+            _needUpdate = true;
             Pulse();
         }
 
         protected override void Reset()
         {
-            Counter = 0;
-            TickTime = default(DateTimeOffset);
+            Output = null;
         }
 
         protected override void Process(ProcessingContext context)
         {
             if (IsEnabled)
             {
-                var interval = Interval >= TimeSpan.FromMilliseconds(1) ? Interval : TimeSpan.FromMilliseconds(1);
-                if (!_isEnabled || _interval != interval || _highPrecision != HighPrecision)
+                if (!_isEnabled || _interval != Interval)
                 {
                     _isEnabled = true;
-                    _interval = interval;
-                    _highPrecision = HighPrecision;
+                    _interval = Interval;
                     _disposable.Dispose();
-                    if (HighPrecision)
-                    {
-                        _disposable = new NewThreadScheduler(start => new Thread(start) {IsBackground = true}).SchedulePeriodic(interval, TimerCallback);
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Enable Timer");
-                        _disposable = new Timer(state => TimerCallback(), null, interval, interval);
-                    }
+                    _disposable = new NewThreadScheduler(start => new Thread(start) {IsBackground = true}).SchedulePeriodic(Interval, TimerCallback);
                     context.DoNotPulseFurther = true;
                 }
                 else
                 {
-                    Counter++;
-                    TickTime = DateTimeOffset.Now;
+                    if (_needUpdate)
+                    {
+                        Output = Input;
+                        _needUpdate = false;
+                    }
+                    else
+                    {
+                        context.DoNotPulseFurther = true;
+                    }
                 }
             }
             else if (_isEnabled)
             {
-                Debug.WriteLine("Disable Timer");
                 _isEnabled = false;
                 _disposable.Dispose();
                 context.DoNotPulseFurther = true;

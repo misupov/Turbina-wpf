@@ -1,0 +1,27 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pinControls="clr-namespace:Turbina.Editors.PinControls"
+    xmlns:viewModels="clr-namespace:Turbina.Editors.ViewModels"
+    mc:Ignorable="d">
+
+    <Style TargetType="{x:Type pinControls:OnOffPinControl}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type pinControls:OnOffPinControl}">
+                    <ToggleButton d:DataContext="{d:DesignInstance viewModels:PinViewModel}"
+                                  Margin="0,5"
+                                  Foreground="White"
+                                  Background="#776495ed"
+                                  BorderThickness="0"
+                                  IsChecked="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  Content="On/Off"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

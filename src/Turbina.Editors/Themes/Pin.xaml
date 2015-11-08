@@ -1,0 +1,58 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Turbina.Editors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Turbina.Editors.ViewModels"
+    mc:Ignorable="d">
+
+    <local:PinTemplateSelector x:Key="PinTemplateSelector"/>
+
+    <Style TargetType="local:Pin">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Pin">
+                    <Grid d:DataContext="{d:DesignInstance viewModels:PinViewModel}">
+                        <StackPanel Orientation="Horizontal" FlowDirection="{TemplateBinding FlowDirection}">
+                            <ContentControl VerticalAlignment="Center"
+                                            Content="{Binding}"
+                                            Focusable="False"
+                                            ContentTemplateSelector="{StaticResource PinTemplateSelector}"/>
+                            <local:EditableTextBlock Background="Transparent"
+                                                     Foreground="White"
+                                                     SelectionBrush="White"
+                                                     CaretBrush="White"
+                                                     VerticalAlignment="Center"
+                                                     Margin="4,0,0,0"
+                                                     Text="{Binding Name}"/>
+                        </StackPanel>
+                        <local:Bullet x:Name="PART_Bullet"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="Left"
+                                      Margin="-14.5,0,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:Bullet">
+        <Setter Property="Opacity" Value="0.95"/>
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:Bullet">
+                    <Grid>
+                        <Ellipse Width="12" Height="12" Fill="Transparent"/>
+                        <Ellipse Width="10" Height="10" Stroke="#a000" StrokeThickness="1"/>
+                        <Ellipse Width="8" Height="8" Fill="Crimson" StrokeThickness="1" Stroke="White"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

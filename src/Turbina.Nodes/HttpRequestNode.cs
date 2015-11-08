@@ -15,7 +15,14 @@ namespace Turbina.Nodes
         {
             using (var httpClient = new HttpClient())
             {
-                Result = httpClient.GetStringAsync(Uri).Result;
+                try
+                {
+                    Result = httpClient.GetStringAsync(Uri).Result;
+                }
+                catch (Exception)
+                {
+                    
+                }
             }
         }
     }

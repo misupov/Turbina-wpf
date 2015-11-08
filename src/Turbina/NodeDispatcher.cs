@@ -10,7 +10,7 @@ namespace Turbina
 
         public NodeDispatcher(string threadName = null)
         {
-            _scheduler = new EventLoopScheduler(start => new Thread(start) { Name = threadName });
+            _scheduler = new EventLoopScheduler(start => new Thread(start) {Name = threadName, IsBackground = true});
         }
 
         public void Invoke(Action action)

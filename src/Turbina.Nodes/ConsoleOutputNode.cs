@@ -14,9 +14,7 @@ namespace Turbina.Nodes
         protected override void Process(ProcessingContext context)
         {
             Output = Input?.ToString();
-            Console.Out.Write($"[{Thread.CurrentThread.Name}] {Output}");
-//            Thread.Sleep(2000);
-            Console.Out.WriteLine();
+            Console.Out.WriteLine(Output);
         }
     }
 }
